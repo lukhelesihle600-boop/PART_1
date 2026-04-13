@@ -18,34 +18,10 @@ public class Login{
    private Scanner scanner=new Scanner(System.in);
    
  }
-    public boolean login(String createdUsername,String createdPassword){
-        return createdUsername.equals(this.Username)&&createdPassword.equals(this.Password); //here we chck if the username and password match the ones the user created
-    }
-    public String welcomeMessage(){
-        return "Welcome" + Firstname + Lastname + "it is great to see you again.";
-    }
-    
+//USERNAME CREATION
+  public boolean checkUsername(String Username){ // we create a class that will check the validity of the created username
+         return Username!= null&&username.contains("_")&&username.length<=5;
 }
-
- public boolean checkUsername(String Username){ // we create a class that will check the validity of the created username
-      return Username!= null&&username.contains("_")&&username.length<=5;
-
-       //USERNAME
-        String userUsername;
-           while(true){
-        System.out.println("Please create a username (your username should contain an underscore and be no longer than five characters long)");//user input for creation of username
-        String Username= scanner.nextLine();
-        boolean Underscore= userName.contains("_");
-        boolean fiveCharacters= userName.lenght<=5;//the username should contain 5 characters or less
-
-        if(fiveCharacters&& Underscore){
-            System.out.println("Username successfully captured");// output of the username created correctly
-             break;// if the password is correct we use word break to exit the loop
-        }else{
-            System.out.println("Username is incorrectly formatted;please ensure that your username contains an underscore and is no longer than five characters long");//output of username created incorrectly
-        }
-
-   }
 
      //PASSWORD
     public boolean checkPassword(String Password){
@@ -68,7 +44,35 @@ public class Login{
              }
          }
                 return capital > 0 && digit > 0 && specialcharacter > 0;
-            
+        
+//WELCOME MESSAGE
+    public String welcomeMessage(){
+        return "Welcome" + Firstname + Lastname + "it is great to see you again.";
+    }
+    
+}
+   public boolean login(String createdUsername,String createdPassword){
+        return createdUsername.equals(this.Username)&&createdPassword.equals(this.Password); //here we chck if the username and password match the ones the user created
+    }
+
+
+       //USERNAME
+        String userUsername;
+           while(true){
+        System.out.println("Please create a username (your username should contain an underscore and be no longer than five characters long)");//user input for creation of username
+        String Username= scanner.nextLine();
+        boolean Underscore= userName.contains("_");
+        boolean fiveCharacters= userName.lenght<=5;//the username should contain 5 characters or less
+
+        if(fiveCharacters&& Underscore){
+            System.out.println("Username successfully captured");// output of the username created correctly
+             break;// if the password is correct we use word break to exit the loop
+        }else{
+            System.out.println("Username is incorrectly formatted;please ensure that your username contains an underscore and is no longer than five characters long");//output of username created incorrectly
+        }
+
+   } 
+       //CELLPHONE NUMBER
               public boolean checkCellphone(String cellphoneNumber){
             if( cellphoneNumber==null|| cellphoneNumber.startsWith("+")){
             return false;
@@ -81,12 +85,8 @@ public class Login{
 
          int distance=cellphoneNumber.length();
          return distance>=10&&distance<=15;
-
-
-           System.out.println("Please enter your firstname"); //user input 
-            String Firstname=scanner.nextLine();
-        System.out.println("Please enter your lastname);
-             String Lastname=scanner.nextLine();
+       
+`
 
              if (isCorrect){ //isCorrect is assigned to all the requirements of the password  
                   System.out.println("Password successfully captured");// we output this message when the password meets all the requirements
@@ -100,13 +100,14 @@ public class Login{
         System.out.println("USER REGISTRATION");
       
          System.out.println("Please enter your firstname"); //user input 
-            String Firstname=scanner.nextLine();
-        System.out.println("Please enter your lastname);
-             String Lastname=scanner.nextLine();
+         String Firstname=scanner.nextLine();
+          
+         System.out.println("Please enter your lastname);
+         String Lastname=scanner.nextLine();
 
-            String Username;
-           while(true){
-        System.out.println("Please create a username (your username should contain an underscore and be no longer than five characters long)");//user input for creation of username
+        String Username;
+          while(true){
+          System.out.println("Please create a username (your username should contain an underscore and be no longer than five characters long)");//user input for creation of username
         String Username= scanner.nextLine();
         boolean Underscore= userName.contains("_");
         boolean fiveCharacters= userName.lenght<=5;//the username should contain 5 characters or less
@@ -138,14 +139,18 @@ public class Login{
             if (checkCellphone(String cellphoneNumber)) break;
             System.out.println("Invalid phone number. Try again.");
         }
-        userCellphone= phone;
+        userCellphone=Phone;
 
           public boolean loginUser(String Username, String Password) {
-        if (registeredUsername == null || registeredPassword == null) return false;
-        return enteredUsername.equals(registeredUsername) &&
-               enteredPassword.equals(registeredPassword);
+        if (userUsername == null || userPassword == null) return false;
+        return enteredUsername.equals(userUsername) &&
+               enteredPassword.equals(userPassword);
 
-                System.out.println("User Login");
+       public String welcomeMessage(){
+        return "Welcome" + Firstname + Lastname + "it is great to see you again.";
+    }
+
+                System.out.println("--User Login--");
                 System.out.println("Please enter your username");
                  String loginUsername=scanner.nextLine();
          
@@ -167,9 +172,12 @@ public class PART1 {
      
     public static void main(String[] args) {
         // TODO code application logic here
-         
+             Login loginSystem = new Login();
+        loginSystem.registerUser();    // Handles all registration input
+        loginSystem.loginUser();    // handles login input and details
+       
+        loginSystem.scanner.close();
                  
-        scanner.close();
     }
     
 }

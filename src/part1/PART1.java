@@ -19,12 +19,12 @@ public class Login{
    
  }
 //USERNAME CREATION
-  public boolean checkUsername(String Username){ // we create a class that will check the validity of the created username
+  public boolean checkUserName(String Username){ // we create a class that will check the validity of the created username
          return Username!= null&&username.contains("_")&&username.length<=5;
 }
 
      //PASSWORD
-    public boolean checkPassword(String Password){
+    public boolean checkPasswordComplexity(String Password){
      if(Password==null||Password.length()<8){
 
 
@@ -51,11 +51,7 @@ public class Login{
     }
     
 }
-   public boolean login(String createdUsername,String createdPassword){
-        return createdUsername.equals(this.Username)&&createdPassword.equals(this.Password); //here we chck if the username and password match the ones the user created
-    }
-
-
+  
        //USERNAME
         String userUsername;
            while(true){
@@ -73,7 +69,7 @@ public class Login{
 
    } 
        //CELLPHONE NUMBER
-              public boolean checkCellphone(String cellphoneNumber){
+              public boolean checkCellPhoneNumber(String cellphoneNumber){
             if( cellphoneNumber==null|| cellphoneNumber.startsWith("+")){
             return false;
          }
@@ -96,7 +92,7 @@ public class Login{
              }
          }
         
-       public String registeredUser() {
+       public String registerUser() {
         System.out.println("USER REGISTRATION");
       
          System.out.println("Please enter your firstname"); //user input 
@@ -146,16 +142,20 @@ public class Login{
         return enteredUsername.equals(userUsername) &&
                enteredPassword.equals(userPassword);
 
-       public String welcomeMessage(){
+       public String returnLoginStatus(boolean loginSuccess){
+          if(loginSuccess){
         return "Welcome" + Firstname + Lastname + "it is great to see you again.";
-    }
-
+       }else{
+          return "Password or Username is incorrect.Please try again";
+       }
+           public void performLogin(){
                 System.out.println("--User Login--");
+              
                 System.out.println("Please enter your username");
-                 String loginUsername=scanner.nextLine();
+                 String loginUserName=scanner.nextLine();
          
                 System.out.println("Please enter your password");
-                 String loginPassword=scanner.nextLine();
+                 String loginPassWord=scanner.nextLine();
          
                      if(newUser.loginUsername,loginPassword){ //newUser is from the new user object that contains the collected information
                        System.out.println("\n" +newUser. welcomeMessage());

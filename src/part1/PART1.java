@@ -173,7 +173,7 @@ public class PART1 {
     public static void main(String[] args) {
         // TODO code application logic here
              Login loginSystem = new Login();
-        loginSystem.registerUser();    // Handles all registration input
+        loginSystem.registeredUser();    // Handles all registration input
         loginSystem.loginUser();    // handles login input and details
        
         loginSystem.scanner.close();

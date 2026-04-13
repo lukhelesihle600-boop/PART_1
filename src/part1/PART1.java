@@ -12,7 +12,7 @@ public class Login{
    private String userFirstname;
    private String userLastname;
    private String userPassword;
-   private String userCellphone
+   private String userCellphone;
    private String userUsername;
 
    private Scanner scanner=new Scanner(System.in);
@@ -120,7 +120,7 @@ public class Login{
         }
 
    }
-        registeredUser=Username;
+        userUsername =Username;
 
             String Password;
         while (true) {
@@ -129,14 +129,16 @@ public class Login{
             if ( checkPassword(String Password))break;
             System.out.println("Password is incorrectly formatted;please ensure that the password has at least 8 characters,a captial letter, a number and a special character.");
         }
-            String phone;
+          userPassword= Password;
+          
+            String Phone;
         while (true) {
             System.out.println("Please enter your cellphone number (with country code, e.g., +27123456789) ");
             phone = scanner.nextLine();
             if (checkCellphone(String cellphoneNumber)) break;
             System.out.println("Invalid phone number. Try again.");
         }
-        registeredPhoneNumber = phone;
+        userCellphone= phone;
 
           public boolean loginUser(String Username, String Password) {
         if (registeredUsername == null || registeredPassword == null) return false;

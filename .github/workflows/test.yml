@@ -1,0 +1,34 @@
+name: Java CI with JUnit
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up JDK 21
+        uses: actions/setup-java@v4
+        with:
+          java-version: '21'
+          distribution: 'temurin'
+
+      - name: Download JUnit Platform Console Standalone
+        run: |
+          wget https://repo1.maven.org/maven2/org/junit/platform/junit-platform-console-standalone/1.10.0/junit-platform-console-standalone-1.10.0.jar -O junit-console.jar
+
+      - name: Compile source and tests
+        run: |
+          mkdir -p build
+          javac -d build -sourcepath src src/part1/*.java
+          javac -d build -cp build:junit-console.jar -sourcepath test test/part1/*.java
+
+      - name: Run tests
+        run: |
+          java -jar junit-console.jar --class-path build --select-class part1.PART1Test

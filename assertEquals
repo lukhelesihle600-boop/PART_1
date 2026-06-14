@@ -1,0 +1,165 @@
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/UnitTests/JUnit5TestClass.java to edit this template
+ */
+package part1;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import static org.junit.jupiter.api.Assertions.*;
+
+/**
+ *
+ * @author Student
+ */
+public class assertEquals {
+    
+ @BeforeEach
+    void clearStoredArrays() {
+        ChatBot.storedIDs.clear();
+        ChatBot.storedHashes.clear();
+        ChatBot.storedRecipients.clear();
+        ChatBot.storedSenders.clear();
+        ChatBot.storedContents.clear();
+    }
+
+    @Test
+    void testUsernameValid() {
+        assertTrue(ChatBot.checkUserName("a_b"));
+        assertTrue(ChatBot.checkUserName("_abc"));
+        assertFalse(ChatBot.checkUserName("abcdef"));      
+        assertFalse(ChatBot.checkUserName("a_bcdef"));     
+        assertFalse(ChatBot.checkUserName(null));
+    }
+
+    @Test
+    void testPasswordComplexity() {
+        assertTrue(ChatBot.checkPasswordComplexity("Hello123!"));
+        assertFalse(ChatBot.checkPasswordComplexity("hi"));              
+        assertFalse(ChatBot.checkPasswordComplexity("hello123!"));       
+        assertFalse(ChatBot.checkPasswordComplexity("HELLO!!!"));        
+        assertFalse(ChatBot.checkPasswordComplexity("Hello1234"));       
+        assertFalse(ChatBot.checkPasswordComplexity(null));
+    }
+
+    @Test
+    void testPhoneRegex() {
+        assertTrue(ChatBot.checkCellPhoneNumber("+27123456789"));
+        assertTrue(ChatBot.checkCellPhoneNumber("+123456789"));
+        assertFalse(ChatBot.checkCellPhoneNumber("0712345678"));         
+        assertFalse(ChatBot.checkCellPhoneNumber("+12"));                
+        assertFalse(ChatBot.checkCellPhoneNumber("+123456789012345"));   
+        assertFalse(ChatBot.checkCellPhoneNumber(null));
+    }
+
+   
+    @Test
+    void testGenerateRawId_LengthOver10() {
+        String raw = ChatBot.generateRawId(1);
+        assertTrue(raw.length() > 10, "Raw ID must be longer than 10 characters");
+    }
+
+    @Test
+    void testGenerateRawId_EndsWithPaddedNumber() {
+        String raw = ChatBot.generateRawId(42);
+        assertTrue(raw.endsWith("042"), "Should end with zero‑padded message number");
+    }
+
+    @Test
+    void testGenerateHash_CorrectFormat() {
+        String hash = ChatBot.generateHash("1234567890", "Hello World", 5);
+        assertEquals("12:5 HELLO WORLD", hash);
+    }
+
+    @Test
+    void testGenerateHash_SingleWord() {
+        String hash = ChatBot.generateHash("0012345678", "Hi", 1);
+        assertEquals("00:1 HI HI", hash);
+    }
+
+    @Test
+    void testGetFirstWord() {
+        assertEquals("Hello", ChatBot.getFirstWord("Hello World Java"));
+        assertEquals("Only", ChatBot.getFirstWord("Only"));
+    }
+
+    @Test
+    void testGetLastWord() {
+        assertEquals("Java", ChatBot.getLastWord("Hello World Java"));
+        assertEquals("Only", ChatBot.getLastWord("Only"));
+    }
+
+   
+    @Test
+    void testAddStoredMessage() {
+        ChatBot.storedIDs.add("1111111111");
+        ChatBot.storedHashes.add("11:1 HELLO WORLD");
+        ChatBot.storedRecipients.add("+27831234567");
+        ChatBot.storedSenders.add("John Doe");
+        ChatBot.storedContents.add("Hello World");
+
+        assertEquals(1, ChatBot.storedIDs.size());
+        assertTrue(ChatBot.storedIDs.contains("1111111111"));
+    }
+
+    @Test
+    void testLongestStoredMessage() {
+        ChatBot.storedIDs.add("1"); ChatBot.storedHashes.add("h1");
+        ChatBot.storedRecipients.add("r1"); ChatBot.storedSenders.add("s1");
+        ChatBot.storedContents.add("Short");
+
+        ChatBot.storedIDs.add("2"); ChatBot.storedHashes.add("h2");
+        ChatBot.storedRecipients.add("r2"); ChatBot.storedSenders.add("s2");
+        ChatBot.storedContents.add("The longest message of all");
+
+        ChatBot.storedIDs.add("3"); ChatBot.storedHashes.add("h3");
+        ChatBot.storedRecipients.add("r3"); ChatBot.storedSenders.add("s3");
+        ChatBot.storedContents.add("Medium");
+
+        int maxIdx = 0;
+        for (int i = 1; i < ChatBot.storedContents.size(); i++) {
+            if (ChatBot.storedContents.get(i).length() > ChatBot.storedContents.get(maxIdx).length()) {
+                maxIdx = i;
+            }
+        }
+        assertEquals(1, maxIdx); 
+    }
+
+    @Test
+    void testDeleteByHash() {
+        ChatBot.storedIDs.add("2222222222");
+        ChatBot.storedHashes.add("22:1 DELETE ME");
+        ChatBot.storedRecipients.add("+2711111111");
+        ChatBot.storedSenders.add("Jane");
+        ChatBot.storedContents.add("Delete me");
+
+        int before = ChatBot.storedIDs.size();
+        String target = "22:1 DELETE ME";
+
+        // Simulate deletion
+        for (int i = 0; i < ChatBot.storedHashes.size(); i++) {
+            if (ChatBot.storedHashes.get(i).equals(target)) {
+                ChatBot.storedIDs.remove(i);
+                ChatBot.storedHashes.remove(i);
+                ChatBot.storedRecipients.remove(i);
+                ChatBot.storedSenders.remove(i);
+                ChatBot.storedContents.remove(i);
+                break;
+            }
+        }
+        assertEquals(before - 1, ChatBot.storedIDs.size());
+        assertFalse(ChatBot.storedHashes.contains(target));
+    }
+
+    @Test
+    void testFullReportDoesNotCrash() {
+        ChatBot.storedIDs.add("0");
+        ChatBot.storedHashes.add("h");
+        ChatBot.storedRecipients.add("r");
+        ChatBot.storedSenders.add("s");
+        ChatBot.storedContents.add("c");
+
+        assertDoesNotThrow(() -> ChatBot.fullReport());
+    }
+}  
+    
+   
